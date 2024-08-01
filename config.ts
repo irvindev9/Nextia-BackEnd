@@ -1,5 +1,5 @@
 const config =  {
-  DB_DATABASE: process.env.DB_DATABASE || "reportes_marsella",
+  DB_DATABASE: process.env.DB_DATABASE || "nextia-techtest",
   DB_USER: process.env.DB_USER || "root",
   DB_PASSWORD: process.env.DB_PASSWORD || "",
   DB_DIALECT: process.env.DB_DIALECT || "mysql2",
