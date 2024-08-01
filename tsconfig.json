@@ -8,6 +8,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "src/db/index.js"],
+  "include": ["src/**/*.ts", "src/db/index.ts"],
   "exclude": ["node_modules"]
 }
