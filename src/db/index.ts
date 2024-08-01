@@ -1,6 +1,4 @@
 const knex = require("knex");
-const config = require("../../config");
-
 const {
   DB_DATABASE,
   DB_USER,
@@ -8,7 +6,7 @@ const {
   DB_DIALECT,
   DB_HOST,
   DB_PORT
-} = config;
+} = require("../../config");;
 
 module.exports = knex({
   client: DB_DIALECT,
