@@ -10,7 +10,7 @@ const {
   DB_PORT
 } = config;
 
-const db = knex({
+module.exports = knex({
   client: DB_DIALECT,
   connection: {
     host: DB_HOST,
@@ -20,5 +20,3 @@ const db = knex({
     database: DB_DATABASE,
   },
 });
-
-module.exports = db;
