@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const db = require("../db");
+const sendEmail = require("../tools/emailHelper");
 const { SECRET_KEY } = require("../../config");
 
 class UsersController {
@@ -50,6 +51,29 @@ class UsersController {
       console.error(error);
       return false;
     }
+  }
+
+  async recover(email: string) {
+    const user = await this.db(this.table).where({ email }).first();
+
+    if (!user) {
+      return null;
+    }
+
+    const newPassword = Math.random().toString(36).substring(7);
+    const password = await bcrypt.hash(newPassword, 10);
+
+    await this.db(this.table).where({ email }).update({ password });
+
+    try {
+      await sendEmail(newPassword, email);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+
+    return newPassword;
   }
 }
 
