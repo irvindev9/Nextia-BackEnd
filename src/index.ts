@@ -54,6 +54,17 @@ app.get("/logout", (req: Request, res: Response) => {
   return res.status(200).json({ message: "Cerrando sesión" });
 });
 
+app.post("/recover", (req: Request, res: Response) => {
+  if (!req.body.email) {
+    return res.status(400).json({ message: "Email requerido" });
+  }
+  userController.recover(req.body.email).then((response: any) => {
+    res.json({ message: "Correo enviado" });
+  } ).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
