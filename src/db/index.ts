@@ -8,7 +8,7 @@ const {
   DB_PORT
 } = require("../../config");;
 
-module.exports = knex({
+export default knex({
   client: DB_DIALECT,
   connection: {
     host: DB_HOST,
