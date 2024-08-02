@@ -5,7 +5,9 @@ const config =  {
   DB_DIALECT: process.env.DB_DIALECT || "mysql2",
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_PORT: process.env.DB_PORT || 3306,
-  CORS_ORIGIN: process.env.CORS_ORIGIN || "*"
+  CORS_ORIGIN: process.env.CORS_ORIGIN || "*",
+  SECRET_KEY: process.env.SECRET_KEY || "secret",
+  EXPIRE_IN: process.env.EXPIRE_IN || "1h",
 }
 
 module.exports = config;
