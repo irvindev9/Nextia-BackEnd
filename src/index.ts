@@ -27,7 +27,7 @@ app.post('/signup', (req: Request, res: Response) => {
   });
 });
 
-app.post("/login", (req: Request, res: Response) => {
+app.post("/token", (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
