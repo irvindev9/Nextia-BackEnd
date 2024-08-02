@@ -3,6 +3,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
 const userController = require('./controllers/usersController');
+const invitationController = require('./controllers/invitationControllers');
 const { verifyToken } = require('./auth/utils');
 
 const { CORS_ORIGIN, SECRET_KEY, EXPIRE_IN } = require("../config");
@@ -61,6 +62,46 @@ app.post("/recover", (req: Request, res: Response) => {
   userController.recover(req.body.email).then((response: any) => {
     res.json({ message: "Correo enviado" });
   } ).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
+app.post("/invitations", verifyToken, (req: Request|any, res: Response) => {
+  invitationController.createInvitation(req.body, req.email).then((response: any) => {
+    res.json(response);
+  }).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
+app.get("/invitations", verifyToken, (req: Request|any, res: Response) => {
+  invitationController.getInvitations(req.body.page, req.email).then((response: any) => {
+    res.json(response);
+  }).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
+app.get("/invitations/:id", verifyToken, (req: Request|any, res: Response) => {
+  invitationController.getInvitation(req.params.id, req.email).then((response: any) => {
+    res.json(response);
+  }).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
+app.put("/invitations/:id", verifyToken, (req: Request|any, res: Response) => {
+  invitationController.updateInvitation(req.params.id, req.body, req.email).then((response: any) => {
+    res.json(response);
+  }).catch((error: any) => {
+    res.json(JSON.stringify(error.sqlMessage || error));
+  });
+});
+
+app.delete("/invitations/:id", verifyToken, (req: Request|any, res: Response) => {
+  invitationController.deleteInvitation(req.params.id, req.email).then((response: any) => {
+    res.json(response);
+  }).catch((error: any) => {
     res.json(JSON.stringify(error.sqlMessage || error));
   });
 });

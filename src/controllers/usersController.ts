@@ -1,7 +1,7 @@
+import db from "../db";
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const db = require("../db");
 const sendEmail = require("../tools/emailHelper");
 const { SECRET_KEY } = require("../../config");
 
