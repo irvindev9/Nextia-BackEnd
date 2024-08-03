@@ -12,7 +12,7 @@ class InvitationController {
   }
 
   async createInvitation(invitation: any, email: string): Promise<number | null> {
-    const user = await db(this.userTable).where({ email }).first();
+    const user: User = await db(this.userTable).where({ email }).first();
 
     const invitation_date = new Date(invitation.invitation_date);
     const expiration_date = new Date(invitation.expiration_date);
@@ -28,13 +28,13 @@ class InvitationController {
   }
 
   async getInvitations(page: number, email: string): Promise<{ info: any, data: Invitations } | null> {
-    const fixPage = (!page) ? 1 : (page < 1) ? 1 : page;
+    const fixPage: number = (!page) ? 1 : (page < 1) ? 1 : page;
 
     const total = await db(this.table).count("* as total").first();
 
-    const user = await db(this.userTable).where({ email }).first();
+    const user: User = await db(this.userTable).where({ email }).first();
 
-    const invitations = await db(this.table).select("*").where({ user_id: user.id }).limit(10).offset((fixPage - 1) * 10);
+    const invitations: Invitations = await db(this.table).select("*").where({ user_id: user.id }).limit(10).offset((fixPage - 1) * 10);
 
     return { 
       info: {
@@ -65,7 +65,7 @@ class InvitationController {
     return updated;
   }
 
-  async deleteInvitation(id: number, email: string) {
+  async deleteInvitation(id: number, email: string): Promise<number | null> {
 
     const isUserInvitation = await this.verifyUserInvitation(email, id);
 
@@ -78,7 +78,7 @@ class InvitationController {
     return deleted;
   }
 
-  async getInvitation(id: number, email: string) {
+  async getInvitation(id: number, email: string): Promise<Invitation | null> {
     
     const isUserInvitation = await this.verifyUserInvitation(email, id);
 
@@ -86,19 +86,19 @@ class InvitationController {
         return null;
     }
     
-    const invitation = await db(this.table).where({ id }).first();
+    const invitation: Invitation = await db(this.table).where({ id }).first();
 
     return invitation;
   }
 
-  async verifyUserInvitation(email: string, invitationId: number) {
+  async verifyUserInvitation(email: string, invitationId: number): Promise<Invitation | null> {
     const user = await db(this.userTable).where({ email }).first();
 
     if (!user) {
         return null;
     }
 
-    const invitation = await db(this.table).where({ id: invitationId, user_id: user.id }).first();
+    const invitation: Invitation = await db(this.table).where({ id: invitationId, user_id: user.id }).first();
 
     if (!invitation) {
         return null;
