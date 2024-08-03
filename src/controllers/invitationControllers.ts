@@ -32,12 +32,7 @@ class InvitationController {
 
     const total = await db(this.table).count("* as total").first();
 
-    console.log({total});
-    console.log({email});
-
     const user = await db(this.userTable).where({ email }).first();
-
-    console.log({user});
 
     const invitations = await db(this.table).select("*").where({ user_id: user.id }).limit(10).offset((fixPage - 1) * 10);
 
