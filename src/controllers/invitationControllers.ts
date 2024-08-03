@@ -1,4 +1,6 @@
 import db from "../db";
+import { User } from "../models/Users";
+import { Invitation, Invitations } from "../models/Invitations";
 
 class InvitationController {
   table: string;
@@ -9,7 +11,7 @@ class InvitationController {
       this.userTable = "users";
   }
 
-  async createInvitation(invitation: any, email: string) {
+  async createInvitation(invitation: any, email: string): Promise<number | null> {
     const user = await db(this.userTable).where({ email }).first();
 
     const invitation_date = new Date(invitation.invitation_date);
@@ -25,7 +27,7 @@ class InvitationController {
     return id;
   }
 
-  async getInvitations(page: number, email: string) {
+  async getInvitations(page: number, email: string): Promise<{ info: any, data: Invitations } | null> {
     const fixPage = (!page) ? 1 : (page < 1) ? 1 : page;
 
     const total = await db(this.table).count("* as total").first();
@@ -48,7 +50,7 @@ class InvitationController {
       data: invitations,
     };
   }
-  async updateInvitation(id: number, invitation: any, email: string) {
+  async updateInvitation(id: number, invitation: any, email: string): Promise<number | null> {
 
     const isUserInvitation = await this.verifyUserInvitation(email, id);
 

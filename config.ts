@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const config =  {
   DB_DATABASE: process.env.DB_DATABASE || "nextia-techtest",
   DB_USER: process.env.DB_USER || "root",

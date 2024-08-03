@@ -1,4 +1,6 @@
+import { User } from './../models/Users';
 import db from "../db";
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -14,7 +16,7 @@ class UsersController {
     this.table = "users";
   }
 
-  async signUp(user: any) {
+  async signUp(user: User): Promise<number> {
     const password = await bcrypt.hash(user.password, 10);
     const [id] = await this.db(this.table).insert({
       ...user,
@@ -23,7 +25,7 @@ class UsersController {
     return id;
   }
 
-  async checkUser(email: string, password: string) {
+  async checkUser(email: string, password: string): Promise<User | null> {
     const user = await this.db(this.table).where({ email }).first();
 
     if (!user) {
@@ -39,7 +41,7 @@ class UsersController {
     return user;
   }
 
-  async verifyToken(header: string) {
+  async verifyToken(header: string): Promise<User | boolean> {
     const token = header.split(" ")[1];
     if (!token) {
       return false;
@@ -53,8 +55,8 @@ class UsersController {
     }
   }
 
-  async recover(email: string) {
-    const user = await this.db(this.table).where({ email }).first();
+  async recover(email: string): Promise<boolean | null> {
+    const user: User = await this.db(this.table).where({ email }).first();
 
     if (!user) {
       return null;
@@ -72,8 +74,6 @@ class UsersController {
       console.error(error);
       return false;
     }
-
-    return newPassword;
   }
 }
 
