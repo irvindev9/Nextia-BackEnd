@@ -21,6 +21,7 @@ class InvitationController {
         ...invitation,
         invitation_date,
         expiration_date,
+        code: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
         user_id: user.id,
     });
 
