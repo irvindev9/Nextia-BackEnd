@@ -35,13 +35,13 @@ class InvitationController {
 
     const user: User = await db(this.userTable).where({ email }).first();
 
-    const invitations: Invitations = await db(this.table).select("*").where({ user_id: user.id }).limit(10).offset((fixPage - 1) * 10);
+    const invitations: Invitations = await db(this.table).select("*").where({ user_id: user.id }).limit(5).offset((fixPage - 1) * 5);
 
     return { 
       info: {
         page: fixPage,
         totalInvitations: total.total,
-        totalPages: Math.ceil(total.total / 10),
+        totalPages: Math.ceil(total.total / 5),
       },
       data: invitations,
     };

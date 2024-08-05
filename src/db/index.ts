@@ -6,7 +6,7 @@ const {
   DB_DIALECT,
   DB_HOST,
   DB_PORT
-} = require("../../config");;
+} = require("../config");;
 
 export default knex({
   client: DB_DIALECT,

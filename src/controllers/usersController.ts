@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const sendEmail = require("../tools/emailHelper");
-const { SECRET_KEY } = require("../../config");
+const { SECRET_KEY, EXPIRE_IN } = require("../config");
 
 class UsersController {
   table: string;
@@ -16,13 +16,16 @@ class UsersController {
     this.table = "users";
   }
 
-  async signUp(user: User): Promise<number> {
+  async signUp(user: User): Promise<{ token: string } | string> {
     const password = await bcrypt.hash(user.password, 10);
     const [id] = await this.db(this.table).insert({
       ...user,
       password,
     });
-    return id;
+
+    const token = jwt.sign({ email: user.email }, SECRET_KEY, { expiresIn: EXPIRE_IN });
+
+    return { token };
   }
 
   async checkUser(email: string, password: string): Promise<User | null> {

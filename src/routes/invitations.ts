@@ -13,7 +13,7 @@ router.post("/", verifyToken, (req: Request|any, res: Response) => {
 });
 
 router.get("/", verifyToken, (req: Request|any, res: Response) => {
-  invitationController.getInvitations(req.body.page, req.email).then((response: any) => {
+  invitationController.getInvitations(req.query.page, req.email).then((response: any) => {
     res.json(response);
   }).catch((error: any) => {
     res.json(JSON.stringify(error.sqlMessage || error));

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const userController = require('../controllers/usersController');
 const { verifyToken } = require('../auth/utils');
 
-const { SECRET_KEY, EXPIRE_IN } = require("../../config");
+const { SECRET_KEY, EXPIRE_IN } = require("../config");
 
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.post("/recover", (req: Request, res: Response) => {
     return res.status(400).json({ message: "Email requerido" });
   }
   userController.recover(req.body.email).then((response: any) => {
-    res.json({ message: "Correo enviado" });
+    res.json({ message: "Correo enviado, revise su bandeja de entrada" });
   } ).catch((error: any) => {
     res.json(JSON.stringify(error.sqlMessage || error));
   });

@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 const cors = require("cors");
 
 const routes = require('./routes');
-const { CORS_ORIGIN } = require("../config");
+const { CORS_ORIGIN } = require("./config");
 
 const corsOptions = {
   origin: CORS_ORIGIN,

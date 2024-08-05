@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY } = require("../../config");
+const { SECRET_KEY } = require("../config");
 
 function verifyToken(req: Request|any, res: Response, next: NextFunction) {
   const header = req.header("Authorization") || "";
